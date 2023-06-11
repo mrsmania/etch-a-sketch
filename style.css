@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color:#DDD0C8;
+    background-color:rgb(221, 208, 200);
 }
 
 #container {
@@ -44,8 +44,16 @@ body {
 }
 
 .gridBorder {
-    border-top: 1px solid #D8C4B6; 
-    border-left: 1px solid #D8C4B6;
+    border-top: 1px solid #DDD0C8; 
+    border-left: 1px solid #DDD0C8;
+}
+
+.gridBorderRight{
+    border-right: 1px solid #DDD0C8;
+}
+
+.gridBorderBottom{
+    border-bottom: 1px solid #DDD0C8;
 }
 
 button {

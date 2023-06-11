@@ -1,5 +1,11 @@
-//Initial grid creation
-createGrid(10);
+function generateRandomColor() {
+    //rgb(221, 208, 200);
+    const rValue = Math.floor(Math.random() * 256);
+    const gValue = Math.floor(Math.random() * 256);
+    const bValue = Math.floor(Math.random() * 256);
+    const randomColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
+    return randomColor;
+}
 
 function createGrid(squaresPerSide) {
     let gridSize = squaresPerSide * squaresPerSide;
@@ -20,17 +26,37 @@ function createGrid(squaresPerSide) {
     }
     const gridContainerWidth = parseInt(getComputedStyle(gridContainer).width); //get total container width in order to calculated the size of the grid-divs
     const gridElements = document.querySelectorAll('.gridElement');
+    const gridElementsArr = Array.from(gridElements);
     const gridElementWidth = (gridContainerWidth / squaresPerSide);
-    gridElements.forEach(gridElement => {
-        gridElement.classList.add('gridBorder');
-        gridElement.style.width = gridElementWidth + "px";
-        gridElement.style.height = gridElementWidth + "px";
+    for (let i = 0; i < gridElementsArr.length; i++) {
+        gridElementsArr[i].classList.toggle('gridBorder');
+        gridElementsArr[i].style.width = gridElementWidth + "px";
+        gridElementsArr[i].style.height = gridElementWidth + "px";
+        if (((i + 1) % squaresPerSide) === 0) { // add border to most right elements (every nth element, whereas nth = number of squares)
+            gridElementsArr[i].classList.toggle('gridBorderRight');
+        }
+        if ((gridElementsArr.length - (i + 1)) < squaresPerSide) { // add border to bottom elements (last nth elements, whereas nth = number of squares)
+            gridElementsArr[i].classList.toggle('gridBorderBottom');
+        }
+    };
+
+    let isMouseDown = false;
+    document.addEventListener('mousedown', function () {
+        isMouseDown = true;
     });
 
+    document.addEventListener('mouseup', function () {
+        isMouseDown = false;
+    });
     //EventListener to change background color
     gridElements.forEach(gridElement => {
         gridElement.addEventListener('mouseover', () => {
-            gridElement.style.backgroundColor = "black";
+            gridElement.addEventListener('mousedown', () => {
+                gridElement.style.backgroundColor = 'black';//generateRandomColor();
+            });
+            if (isMouseDown) {
+                gridElement.style.backgroundColor = 'black';//generateRandomColor();
+            }
         });
     });
 
@@ -46,9 +72,15 @@ function createGrid(squaresPerSide) {
     //Add eventListener to the respective button
     const gridLinesButton = document.getElementById('toggleGridLines');
     gridLinesButton.addEventListener('click', () => {
-        gridElements.forEach(gridElement => {
-            gridElement.classList.toggle('gridBorder');
-        });
+        for (let i = 0; i < gridElementsArr.length; i++) {
+            gridElementsArr[i].classList.toggle('gridBorder');
+            if (((i + 1) % squaresPerSide) === 0) { // add border to most right elements (every nth element, whereas nth = number of squares)
+                gridElementsArr[i].classList.toggle('gridBorderRight');
+            }
+            if ((gridElementsArr.length - (i + 1)) < squaresPerSide) { // add border to bottom elements (last nth elements, whereas nth = number of squares)
+                gridElementsArr[i].classList.toggle('gridBorderBottom');
+            }
+        };
     });
 }
 
@@ -81,3 +113,5 @@ function checkPrompt(input) {
     }
 }
 
+//Initial grid creation
+createGrid(16);
