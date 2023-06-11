@@ -7,29 +7,57 @@
     -webkit-box-sizing: border-box;
 }
 
-#gridContainer {
-    width: 640px;
-    height: 640px;
+body {
+    background-color:#DDD0C8;
+}
+
+#container {
+    width: 700px;
+    margin: 25px auto;
     display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a5826d;
+    border-radius: 10px;
+}
+
+#outerButtonContainer {
+    width: 700px;
+    padding: 30px 30px 0 30px;
+}
+
+#outerGridContainer {
+    width: 700px;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gridContainer {
+    background-color: white; 
+    width: 640px; 
+    height: 640px; 
+    display: flex; 
     flex-wrap: wrap;
 }
 
-.gridElement {
-    border: 1px solid black;
-}
-
-#buttons {
-    margin-top:30px;
+.gridBorder {
+    border-top: 1px solid #D8C4B6; 
+    border-left: 1px solid #D8C4B6;
 }
 
 button {
-  background-color:#a9a9a9;
-  padding: 15px 25px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    background-color: #FFCC00;
+    font-weight: bolder;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 20px;
 }
 
 button:hover {
-  background-color: #999;
+    background-color: #e6b800;
 }
