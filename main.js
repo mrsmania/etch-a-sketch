@@ -21,7 +21,6 @@ function createGrid(squaresPerSide) {
         gridContainer.append(div); // append grid element to grid container
     }
     createBorder(squaresPerSide);
-
     colorizeCanvas();
 }
 
@@ -63,12 +62,10 @@ function clearColors() {
 
 function checkPrompt(input) {
     let newSquaresPerSide = prompt(input, "");
-
     if (newSquaresPerSide === null) {
     } else {
         newSquaresPerSide = parseInt(newSquaresPerSide);
         if (Number.isInteger(newSquaresPerSide) && newSquaresPerSide > 0 && newSquaresPerSide <= 100) {
-
             gridContainer.remove();
             createGrid(newSquaresPerSide);
         } else {
@@ -124,17 +121,17 @@ rainbowButton.addEventListener('click', () => {
     } else if (activePen === "color") {
         activePen = "black";
         rainbowButton.classList.toggle('rainbowButtonBackground');
-        eraserButton.classList.toggle('eraserButtonBackground');
     } else if (activePen === "eraser") {
         activePen = "color";
         rainbowButton.classList.toggle('rainbowButtonBackground');
+        eraserButton.classList.toggle('eraserButtonBackground');
     }
 });
 
 //Button for eraser
 const eraserButton = document.getElementById('eraser');
 eraserButton.addEventListener('click', () => {
-    if(activePen === "black") {
+    if (activePen === "black") {
         activePen = "eraser";
         eraserButton.classList.toggle('eraserButtonBackground');
     } else if (activePen === "color") {
@@ -145,6 +142,16 @@ eraserButton.addEventListener('click', () => {
         activePen = "black";
         eraserButton.classList.toggle('eraserButtonBackground');
     }
+});
+
+//Slider for grid size
+const rangeSliderInput = document.getElementById('slider');
+const sizeValueDiv = document.getElementById('sizeValue');
+rangeSliderInput.addEventListener('change', () => {
+    newValue=rangeSliderInput.value;
+    gridContainer.remove();
+    createGrid(newValue);
+    sizeValueDiv.innerHTML=newValue+" x "+newValue;
 });
 
 //Initial grid creation

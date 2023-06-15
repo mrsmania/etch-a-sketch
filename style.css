@@ -40,7 +40,9 @@ body {
     width: 640px; 
     height: 640px; 
     display: flex; 
-    flex-wrap: wrap;
+    flex-wrap: wrap;  
+    box-shadow: 0 0 5px 5px rgb(0 0 0 / 0.2);
+
 }
 
 .gridBorder {
@@ -85,4 +87,17 @@ button:hover {
 
 .eraserButtonBackground:hover {
     background-color: mediumaquamarine;
+}
+
+#sliderContainer {
+    width: 100%;
+    text-align: center;
+}
+
+#sizeValue {
+    margin-top: 20px;
+}
+
+input[type=range] {
+    width: 100%;
 }
