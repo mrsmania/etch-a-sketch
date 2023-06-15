@@ -1,5 +1,7 @@
+
+let activePen = 'black';
+
 function createGrid(squaresPerSide) {
-    let activePen = 'black';
     let gridSize = squaresPerSide * squaresPerSide;
     //create new grid container
     const newGridContainer = document.createElement('div');
@@ -15,9 +17,27 @@ function createGrid(squaresPerSide) {
     for (let i = 0; i < gridSize; i++) {
         const div = document.createElement('div'); // create new grid element
         div.className = "gridElement";
+        div.id = "gridElement" + i;
         gridContainer.append(div); // append grid element to grid container
     }
     createBorder(squaresPerSide);
+
+    colorizeCanvas();
+}
+
+function colorizeCanvas() {
+    const gridElements = document.querySelectorAll('.gridElement');
+    gridElements.forEach(gridElement => {
+        gridElement.addEventListener('mouseover', () => {
+            if (activePen === "black") {
+                gridElement.style.backgroundColor = 'black';
+            } else if (activePen === "color") {
+                gridElement.style.backgroundColor = generateRandomColor();
+            } else if (activePen === "eraser") {
+                gridElement.style.backgroundColor = 'white';
+            }
+        });
+    });
 }
 
 function createBorder(input) {
@@ -37,7 +57,7 @@ function createBorder(input) {
 function clearColors() {
     const gridElements = document.querySelectorAll('.gridElement');
     gridElements.forEach(gridElement => {
-        gridElement.style.backgroundColor = "red";
+        gridElement.style.backgroundColor = "white";
     });
 }
 
@@ -104,20 +124,28 @@ rainbowButton.addEventListener('click', () => {
     } else if (activePen === "color") {
         activePen = "black";
         rainbowButton.classList.toggle('rainbowButtonBackground');
+        eraserButton.classList.toggle('eraserButtonBackground');
+    } else if (activePen === "eraser") {
+        activePen = "color";
+        rainbowButton.classList.toggle('rainbowButtonBackground');
     }
-    console.log("activePen: " + activePen);
 });
 
-/* //EventListener to change background color
-gridElements.forEach(gridElement => {
-    gridElement.addEventListener('mouseover', () => {
-        if (activePen === "black") {
-            gridElement.style.backgroundColor = 'black';
-        } else if (activePen === "color") {
-            gridElement.style.backgroundColor = generateRandomColor();
-        }
-    });
-}); */
+//Button for eraser
+const eraserButton = document.getElementById('eraser');
+eraserButton.addEventListener('click', () => {
+    if(activePen === "black") {
+        activePen = "eraser";
+        eraserButton.classList.toggle('eraserButtonBackground');
+    } else if (activePen === "color") {
+        activePen = "eraser";
+        rainbowButton.classList.toggle('rainbowButtonBackground');
+        eraserButton.classList.toggle('eraserButtonBackground');
+    } else if (activePen === "eraser") {
+        activePen = "black";
+        eraserButton.classList.toggle('eraserButtonBackground');
+    }
+});
 
 //Initial grid creation
 createGrid(16);

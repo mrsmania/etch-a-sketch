@@ -64,6 +64,7 @@ button {
     border-radius: 10px;
     cursor: pointer;
     margin-right: 20px;
+    margin-top: 20px;
 }
 
 button:hover {
@@ -76,4 +77,12 @@ button:hover {
 
 .rainbowButtonBackground:hover {
     background-color: plum;
+}
+
+.eraserButtonBackground {
+    background-color: lightblue;
+}
+
+.eraserButtonBackground:hover {
+    background-color: mediumaquamarine;
 }
