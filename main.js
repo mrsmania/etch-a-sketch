@@ -1,13 +1,5 @@
-function generateRandomColor() {
-    //rgb(221, 208, 200);
-    const rValue = Math.floor(Math.random() * 256);
-    const gValue = Math.floor(Math.random() * 256);
-    const bValue = Math.floor(Math.random() * 256);
-    const randomColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
-    return randomColor;
-}
-
 function createGrid(squaresPerSide) {
+    let activePen='black';
     let gridSize = squaresPerSide * squaresPerSide;
     //create new grid container
     const newGridContainer = document.createElement('div');
@@ -40,25 +32,37 @@ function createGrid(squaresPerSide) {
         }
     };
 
-    let isMouseDown = false;
-    document.addEventListener('mousedown', function () {
-        isMouseDown = true;
-    });
-
-    document.addEventListener('mouseup', function () {
-        isMouseDown = false;
+    // Button for rainbow pen
+    const rainbowButton = document.getElementById('rainbowColors');
+    rainbowButton.addEventListener('click', () => {
+        if (activePen === "black") {
+            activePen = "color";
+            rainbowButton.classList.toggle('rainbowButtonBackground');
+        } else if (activePen==="color") {
+            activePen = "black";
+            rainbowButton.classList.toggle('rainbowButtonBackground');
+        }
+        console.log("activePen: "+activePen);
     });
     //EventListener to change background color
     gridElements.forEach(gridElement => {
         gridElement.addEventListener('mouseover', () => {
-            gridElement.addEventListener('mousedown', () => {
-                gridElement.style.backgroundColor = 'black';//generateRandomColor();
-            });
-            if (isMouseDown) {
-                gridElement.style.backgroundColor = 'black';//generateRandomColor();
+            if (activePen === "black") {
+                gridElement.style.backgroundColor = 'black';
+            } else if (activePen === "color") {
+                gridElement.style.backgroundColor = generateRandomColor();
             }
         });
     });
+
+    function generateRandomColor() {
+        //rgb(221, 208, 200);
+        const rValue = Math.floor(Math.random() * 256);
+        const gValue = Math.floor(Math.random() * 256);
+        const bValue = Math.floor(Math.random() * 256);
+        const randomColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
+        return randomColor;
+    }
 
     // Clear button to remove colorings
     const clearButton = document.getElementById('clearColors');

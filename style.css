@@ -69,3 +69,11 @@ button {
 button:hover {
     background-color: #e6b800;
 }
+
+.rainbowButtonBackground {
+    background-color: pink;
+}
+
+.rainbowButtonBackground:hover {
+    background-color: plum;
+}
