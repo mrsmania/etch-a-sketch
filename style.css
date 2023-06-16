@@ -7,40 +7,50 @@
     -webkit-box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     background-color:rgb(221, 208, 200);
+    height: 100%;
 }
 
 #container {
-    width: 700px;
-    margin: 25px auto;
+    display:flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#innercontainer {
+    width: 900px;
+    margin: 50px auto;
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    background-color: #a5826d;
+    flex-direction: row;
+    align-items: stretch;
     border-radius: 10px;
 }
 
 #outerButtonContainer {
-    width: 700px;
-    padding: 30px 30px 0 30px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 50px;
 }
 
 #outerGridContainer {
-    width: 700px;
-    height: 700px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #gridContainer {
-    background-color: white; 
-    width: 640px; 
-    height: 640px; 
-    display: flex; 
-    flex-wrap: wrap;  
+    background-color: white;
+    width: 600px;
+    height: 600px;
+    display: flex;
+    flex-wrap: wrap;
     box-shadow: 0 0 5px 5px rgb(0 0 0 / 0.2);
 
 }
@@ -65,28 +75,15 @@ button {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    margin-right: 20px;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 button:hover {
     background-color: #e6b800;
 }
 
-.rainbowButtonBackground {
-    background-color: pink;
-}
-
-.rainbowButtonBackground:hover {
-    background-color: plum;
-}
-
-.eraserButtonBackground {
-    background-color: lightblue;
-}
-
-.eraserButtonBackground:hover {
-    background-color: mediumaquamarine;
+.buttonActive {
+    background-color: #e6b800;
 }
 
 #sliderContainer {
