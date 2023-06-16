@@ -34,7 +34,7 @@ function createGrid(squaresPerSide) {
 function clearGrid() {
     const gridElements = document.querySelectorAll('.gridElement');
     gridElements.forEach(gridElement => {
-        gridElement.style.backgroundColor = "#fff";
+        gridElement.style.backgroundColor = "white";
     });
 }
 
@@ -60,9 +60,9 @@ function changeColor(e) {
         const bValue = Math.floor(Math.random() * 256);
         e.target.style.backgroundColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
     } else if (activePen === "black") {
-        e.target.style.backgroundColor = '#000';
+        e.target.style.backgroundColor = 'black';
     } else if (activePen === "eraser") {
-        e.target.style.backgroundColor = '#fff';
+        e.target.style.backgroundColor = 'white';
     } else if (activePen === "gradient") {
         if (e.target.style.backgroundColor.match(/rgba/)) {
             currentOpacity = Number(e.target.style.backgroundColor.slice(-4, -1));
