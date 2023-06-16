@@ -31,27 +31,10 @@ function createGrid(squaresPerSide) {
     toggleGridLines(squaresPerSide);
 }
 
-function changeColor(e) {
-    if (activePen === "rainBow") {
-        const rValue = Math.floor(Math.random() * 256);
-        const gValue = Math.floor(Math.random() * 256);
-        const bValue = Math.floor(Math.random() * 256);
-        e.target.style.backgroundColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
-    } else if (activePen === "black") {
-        e.target.style.backgroundColor = 'black';
-    } else if (activePen === "eraser") {
-        e.target.style.backgroundColor = 'white';
-    } else if (activePen === "gradient") {
-        console.log("Vorher: "+e.target.style.backgroundColor);
-        e.target.style.backgroundColor = "rgba(0,0,0,0.1)";
-        console.log("Nachher: "+e.target.style.backgroundColor);
-    }
-}
-
 function clearGrid() {
     const gridElements = document.querySelectorAll('.gridElement');
     gridElements.forEach(gridElement => {
-        gridElement.style.backgroundColor = "white";
+        gridElement.style.backgroundColor = "#fff";
     });
 }
 
@@ -68,6 +51,30 @@ function toggleGridLines(input) {
             gridElementsArr[i].classList.toggle('gridBorderBottom');
         }
     };
+}
+
+function changeColor(e) {
+    if (activePen === "rainBow") {
+        const rValue = Math.floor(Math.random() * 256);
+        const gValue = Math.floor(Math.random() * 256);
+        const bValue = Math.floor(Math.random() * 256);
+        e.target.style.backgroundColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
+    } else if (activePen === "black") {
+        e.target.style.backgroundColor = '#000';
+    } else if (activePen === "eraser") {
+        e.target.style.backgroundColor = '#fff';
+    } else if (activePen === "gradient") {
+        if (e.target.style.backgroundColor.match(/rgba/)) {
+            currentOpacity = Number(e.target.style.backgroundColor.slice(-4, -1));
+            if (currentOpacity <= 0.9) {
+                e.target.style.backgroundColor = "rgba(0, 0, 0, " + Number(currentOpacity + 0.1) + ")";
+            }
+        } else if (e.target.style.backgroundColor === "rgb(0, 0, 0)") {
+            return;
+        } else {
+            e.target.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
+        }
+    }
 }
 
 function toggleActivePen(e) {
