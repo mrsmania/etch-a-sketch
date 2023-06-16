@@ -11,10 +11,9 @@
 
 <body>
     <div id="container">
-        <div id="outerButtonContainer">
-            <div id="buttons">
+        <div id="innercontainer">
+            <div id="outerButtonContainer">
                 <button id="clearColors">Clear</button>
-                <button id="changeGridSize">Change grid size</button>
                 <button id="toggleGridLines">Grid lines</button>
                 <button id="rainbowColors">Rainbow pen</button>
                 <button id="eraser">Eraser</button>
@@ -23,8 +22,10 @@
                     <input type="range" id="slider" value="16">
                 </div>
             </div>
+            <div id="outerGridContainer">
+                <div id="gridContainer"></div>
+            </div>
         </div>
-        <div id="outerGridContainer"></div>
     </div>
 </body>
 
