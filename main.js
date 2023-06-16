@@ -3,6 +3,7 @@ let activePen = 'black';
 const clearButton = document.getElementById('clearColors');
 const gridLinesButton = document.getElementById('toggleGridLines');
 const rainbowButton = document.getElementById('rainbowColors');
+const gradientButton = document.getElementById('gradient');
 const eraserButton = document.getElementById('eraser');
 const rangeSliderInput = document.getElementById('slider');
 const sizeValueDiv = document.getElementById('sizeValue');
@@ -11,6 +12,7 @@ const gridContainerWidth = parseInt(getComputedStyle(gridContainer).width);
 clearButton.addEventListener('click', clearGrid);
 gridLinesButton.addEventListener('click', toggleGridLines);
 rainbowButton.addEventListener('click', toggleActivePen);
+gradientButton.addEventListener('click', toggleActivePen);
 eraserButton.addEventListener('click', toggleActivePen);
 rangeSliderInput.addEventListener('change', changeGridSize);
 
@@ -30,7 +32,7 @@ function createGrid(squaresPerSide) {
 }
 
 function changeColor(e) {
-    if (activePen === "color") {
+    if (activePen === "rainBow") {
         const rValue = Math.floor(Math.random() * 256);
         const gValue = Math.floor(Math.random() * 256);
         const bValue = Math.floor(Math.random() * 256);
@@ -39,6 +41,10 @@ function changeColor(e) {
         e.target.style.backgroundColor = 'black';
     } else if (activePen === "eraser") {
         e.target.style.backgroundColor = 'white';
+    } else if (activePen === "gradient") {
+        console.log("Vorher: "+e.target.style.backgroundColor);
+        e.target.style.backgroundColor = "rgba(0,0,0,0.1)";
+        console.log("Nachher: "+e.target.style.backgroundColor);
     }
 }
 
@@ -67,28 +73,52 @@ function toggleGridLines(input) {
 function toggleActivePen(e) {
     clickedButton = e.target.id;
     if (clickedButton === "rainbowColors") {
-        if (activePen === "black") {
-            activePen = "color";
-            rainbowButton.classList.toggle('buttonActive');
-        } else if (activePen === "color") {
+        if (activePen === "rainBow") {
             activePen = "black";
             rainbowButton.classList.toggle('buttonActive');
+        } else if (activePen === "black") {
+            activePen = "rainBow";
+            rainbowButton.classList.toggle('buttonActive');
         } else if (activePen === "eraser") {
-            activePen = "color";
+            activePen = "rainBow";
             rainbowButton.classList.toggle('buttonActive');
             eraserButton.classList.toggle('buttonActive');
+        } else if (activePen === "gradient") {
+            activePen = "rainBow";
+            rainbowButton.classList.toggle('buttonActive');
+            gradientButton.classList.toggle('buttonActive');
         }
     } else if (clickedButton === "eraser") {
-        if (activePen === "black") {
+        if (activePen === "eraser") {
+            activePen = "black";
+            eraserButton.classList.toggle('buttonActive');
+        } else if (activePen === "black") {
             activePen = "eraser";
             eraserButton.classList.toggle('buttonActive');
-        } else if (activePen === "color") {
+        } else if (activePen === "rainBow") {
             activePen = "eraser";
             rainbowButton.classList.toggle('buttonActive');
             eraserButton.classList.toggle('buttonActive');
-        } else if (activePen === "eraser") {
-            activePen = "black";
+        } else if (activePen === "gradient") {
+            activePen = "eraser";
+            gradientButton.classList.toggle('buttonActive');
             eraserButton.classList.toggle('buttonActive');
+        }
+    } else if (clickedButton === "gradient") {
+        if (activePen === "gradient") {
+            activePen = "black";
+            gradientButton.classList.toggle('buttonActive');
+        } else if (activePen === "black") {
+            activePen = "gradient";
+            gradientButton.classList.toggle('buttonActive');
+        } else if (activePen === "rainBow") {
+            activePen = "gradient";
+            rainbowButton.classList.toggle('buttonActive');
+            gradientButton.classList.toggle('buttonActive');
+        } else if (activePen === "eraser") {
+            activePen = "gradient";
+            eraserButton.classList.toggle('buttonActive');
+            gradientButton.classList.toggle('buttonActive');
         }
     }
 }
