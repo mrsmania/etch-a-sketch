@@ -1,158 +1,104 @@
-
 let activePen = 'black';
 
+const clearButton = document.getElementById('clearColors');
+const gridLinesButton = document.getElementById('toggleGridLines');
+const rainbowButton = document.getElementById('rainbowColors');
+const eraserButton = document.getElementById('eraser');
+const rangeSliderInput = document.getElementById('slider');
+const sizeValueDiv = document.getElementById('sizeValue');
+const gridContainerWidth = parseInt(getComputedStyle(gridContainer).width);
+
+clearButton.addEventListener('click', clearGrid);
+gridLinesButton.addEventListener('click', toggleGridLines);
+rainbowButton.addEventListener('click', toggleActivePen);
+eraserButton.addEventListener('click', toggleActivePen);
+rangeSliderInput.addEventListener('change', changeGridSize);
+
 function createGrid(squaresPerSide) {
-    let gridSize = squaresPerSide * squaresPerSide;
-    //create new grid container
-    const newGridContainer = document.createElement('div');
-    newGridContainer.id = "gridContainer";
-    //newGridContainer.style.cssText="background-color:#a5826d";
-
-    //append new grid container to container div
-    const outerGridContainer = document.getElementById('outerGridContainer');
-    outerGridContainer.appendChild(newGridContainer);
-
-    //append divs to newly created grid container
-    const gridContainer = document.getElementById('gridContainer');
-    for (let i = 0; i < gridSize; i++) {
-        const div = document.createElement('div'); // create new grid element
-        div.className = "gridElement";
-        div.id = "gridElement" + i;
-        gridContainer.append(div); // append grid element to grid container
-    }
-    createBorder(squaresPerSide);
-    colorizeCanvas();
-}
-
-function colorizeCanvas() {
-    const gridElements = document.querySelectorAll('.gridElement');
-    gridElements.forEach(gridElement => {
-        gridElement.addEventListener('mouseover', () => {
-            if (activePen === "black") {
-                gridElement.style.backgroundColor = 'black';
-            } else if (activePen === "color") {
-                gridElement.style.backgroundColor = generateRandomColor();
-            } else if (activePen === "eraser") {
-                gridElement.style.backgroundColor = 'white';
-            }
-        });
-    });
-}
-
-function createBorder(input) {
-    squaresPerSide = input;
-    //create border for right-most elements & bottom elements
-    const gridContainerWidth = parseInt(getComputedStyle(gridContainer).width); //get total container width in order to calculated the size of the grid-divs
-    const gridElements = document.querySelectorAll('.gridElement');
+    const gridSize = squaresPerSide * squaresPerSide;
     const gridElementWidth = ((gridContainerWidth / squaresPerSide)) + "px";
-    const gridElementsArr = Array.from(gridElements);
-    for (let i = 0; i < gridElementsArr.length; i++) {
-        gridElementsArr[i].style.width = gridElementWidth;
-        gridElementsArr[i].style.height = gridElementWidth;
-    };
-    toggleGridLines();
+    for (let i = 0; i < gridSize; i++) {
+        const div = document.createElement('div');
+        div.className = "gridElement";
+        div.addEventListener('mouseover', changeColor);
+        div.addEventListener('mousedown', changeColor);
+        div.style.width = gridElementWidth;
+        div.style.height = gridElementWidth;
+        gridContainer.append(div);
+    }
+    toggleGridLines(squaresPerSide);
 }
 
-function clearColors() {
+function changeColor(e) {
+    if (activePen === "color") {
+        const rValue = Math.floor(Math.random() * 256);
+        const gValue = Math.floor(Math.random() * 256);
+        const bValue = Math.floor(Math.random() * 256);
+        e.target.style.backgroundColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
+    } else if (activePen === "black") {
+        e.target.style.backgroundColor = 'black';
+    } else if (activePen === "eraser") {
+        e.target.style.backgroundColor = 'white';
+    }
+}
+
+function clearGrid() {
     const gridElements = document.querySelectorAll('.gridElement');
     gridElements.forEach(gridElement => {
         gridElement.style.backgroundColor = "white";
     });
 }
 
-function checkPrompt(input) {
-    let newSquaresPerSide = prompt(input, "");
-    if (newSquaresPerSide === null) {
-    } else {
-        newSquaresPerSide = parseInt(newSquaresPerSide);
-        if (Number.isInteger(newSquaresPerSide) && newSquaresPerSide > 0 && newSquaresPerSide <= 100) {
-            gridContainer.remove();
-            createGrid(newSquaresPerSide);
-        } else {
-            input = "Please enter a number between 1-100."
-            checkPrompt(input);
-        }
-    }
-}
-
-function toggleGridLines() {
+function toggleGridLines(input) {
+    squaresPerSide = input;
     const gridElements = document.querySelectorAll('.gridElement');
     const gridElementsArr = Array.from(gridElements);
     for (let i = 0; i < gridElementsArr.length; i++) {
         gridElementsArr[i].classList.toggle('gridBorder');
-        if (((i + 1) % squaresPerSide) === 0) { // add border to most right elements (every nth element, whereas nth = number of squares)
+        if (((i + 1) % squaresPerSide) === 0) {
             gridElementsArr[i].classList.toggle('gridBorderRight');
         }
-        if ((gridElementsArr.length - (i + 1)) < squaresPerSide) { // add border to bottom elements (last nth elements, whereas nth = number of squares)
+        if ((gridElementsArr.length - (i + 1)) < squaresPerSide) {
             gridElementsArr[i].classList.toggle('gridBorderBottom');
         }
     };
 }
 
-function generateRandomColor() {
-    const rValue = Math.floor(Math.random() * 256);
-    const gValue = Math.floor(Math.random() * 256);
-    const bValue = Math.floor(Math.random() * 256);
-    const randomColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
-    return randomColor;
+function toggleActivePen(e) {
+    clickedButton = e.target.id;
+    if (clickedButton === "rainbowColors") {
+        if (activePen === "black") {
+            activePen = "color";
+            rainbowButton.classList.toggle('buttonActive');
+        } else if (activePen === "color") {
+            activePen = "black";
+            rainbowButton.classList.toggle('buttonActive');
+        } else if (activePen === "eraser") {
+            activePen = "color";
+            rainbowButton.classList.toggle('buttonActive');
+            eraserButton.classList.toggle('buttonActive');
+        }
+    } else if (clickedButton === "eraser") {
+        if (activePen === "black") {
+            activePen = "eraser";
+            eraserButton.classList.toggle('buttonActive');
+        } else if (activePen === "color") {
+            activePen = "eraser";
+            rainbowButton.classList.toggle('buttonActive');
+            eraserButton.classList.toggle('buttonActive');
+        } else if (activePen === "eraser") {
+            activePen = "black";
+            eraserButton.classList.toggle('buttonActive');
+        }
+    }
 }
 
-//Button to reset colored divs
-const clearButton = document.getElementById('clearColors');
-clearButton.addEventListener('click', clearColors);
-
-//Button to change grid size
-const gridSizeButton = document.getElementById('changeGridSize');
-gridSizeButton.addEventListener('click', () => {
-    let input = "How many Squares per side?"; //define msg
-    checkPrompt(input);
-});
-
-//Button to toggle grid lines
-const gridLinesButton = document.getElementById('toggleGridLines');
-gridLinesButton.addEventListener('click', toggleGridLines);
-
-//Button for rainbow pen
-const rainbowButton = document.getElementById('rainbowColors');
-rainbowButton.addEventListener('click', () => {
-    if (activePen === "black") {
-        activePen = "color";
-        rainbowButton.classList.toggle('rainbowButtonBackground');
-    } else if (activePen === "color") {
-        activePen = "black";
-        rainbowButton.classList.toggle('rainbowButtonBackground');
-    } else if (activePen === "eraser") {
-        activePen = "color";
-        rainbowButton.classList.toggle('rainbowButtonBackground');
-        eraserButton.classList.toggle('eraserButtonBackground');
-    }
-});
-
-//Button for eraser
-const eraserButton = document.getElementById('eraser');
-eraserButton.addEventListener('click', () => {
-    if (activePen === "black") {
-        activePen = "eraser";
-        eraserButton.classList.toggle('eraserButtonBackground');
-    } else if (activePen === "color") {
-        activePen = "eraser";
-        rainbowButton.classList.toggle('rainbowButtonBackground');
-        eraserButton.classList.toggle('eraserButtonBackground');
-    } else if (activePen === "eraser") {
-        activePen = "black";
-        eraserButton.classList.toggle('eraserButtonBackground');
-    }
-});
-
-//Slider for grid size
-const rangeSliderInput = document.getElementById('slider');
-const sizeValueDiv = document.getElementById('sizeValue');
-rangeSliderInput.addEventListener('change', () => {
-    newValue=rangeSliderInput.value;
-    gridContainer.remove();
+function changeGridSize() {
+    newValue = rangeSliderInput.value;
+    gridContainer.innerHTML = '';
     createGrid(newValue);
-    sizeValueDiv.innerHTML=newValue+" x "+newValue;
-});
+    sizeValueDiv.innerHTML = newValue + " x " + newValue;
+}
 
 //Initial grid creation
 createGrid(16);
