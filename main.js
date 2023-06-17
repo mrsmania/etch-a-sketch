@@ -1,23 +1,23 @@
 let activePen = 'black';
 let mouseIsClicked = false;
 
-document.addEventListener('mousedown', () => mouseIsClicked = true);
-document.addEventListener('mouseup', () => mouseIsClicked = false);
-
 const clearButton = document.getElementById('clearColors');
 const gridLinesButton = document.getElementById('toggleGridLines');
 const rainbowButton = document.getElementById('rainbowColors');
 const gradientButton = document.getElementById('gradient');
 const eraserButton = document.getElementById('eraser');
 const rangeSliderInput = document.getElementById('slider');
-const sizeValueDiv = document.getElementById('sizeValue');
+const squaresPerSideDisplay = document.getElementById('squaresPerSide');
 const gridContainerWidth = parseInt(getComputedStyle(gridContainer).width);
 
+document.addEventListener('mousedown', () => mouseIsClicked = true);
+document.addEventListener('mouseup', () => mouseIsClicked = false);
 clearButton.addEventListener('click', clearGrid);
 gridLinesButton.addEventListener('click', toggleGridLines);
 rainbowButton.addEventListener('click', toggleActivePen);
 gradientButton.addEventListener('click', toggleActivePen);
 eraserButton.addEventListener('click', toggleActivePen);
+rangeSliderInput.addEventListener('input', displayGridSize);
 rangeSliderInput.addEventListener('change', changeGridSize);
 
 function createGrid(squaresPerSide) {
@@ -35,8 +35,12 @@ function createGrid(squaresPerSide) {
     toggleGridLines(squaresPerSide);
 }
 
+function selectAllGridElements() {
+    return gridElements = document.querySelectorAll('.gridElement');
+}
+
 function clearGrid() {
-    const gridElements = document.querySelectorAll('.gridElement');
+    selectAllGridElements();
     gridElements.forEach(gridElement => {
         gridElement.style.backgroundColor = "white";
     });
@@ -44,7 +48,7 @@ function clearGrid() {
 
 function toggleGridLines(input) {
     squaresPerSide = input;
-    const gridElements = document.querySelectorAll('.gridElement');
+    selectAllGridElements();
     const gridElementsArr = Array.from(gridElements);
     for (let i = 0; i < gridElementsArr.length; i++) {
         gridElementsArr[i].classList.toggle('gridBorder');
@@ -83,8 +87,7 @@ function changeColor(e) {
 }
 
 function toggleActivePen(e) {
-    clickedButton = e.target.id;
-    if (clickedButton === "rainbowColors") {
+    if (e.target.id === "rainbowColors") {
         if (activePen === "rainBow") {
             activePen = "black";
             rainbowButton.classList.toggle('buttonActive');
@@ -100,7 +103,7 @@ function toggleActivePen(e) {
             rainbowButton.classList.toggle('buttonActive');
             gradientButton.classList.toggle('buttonActive');
         }
-    } else if (clickedButton === "eraser") {
+    } else if (e.target.id === "eraser") {
         if (activePen === "eraser") {
             activePen = "black";
             eraserButton.classList.toggle('buttonActive');
@@ -116,7 +119,7 @@ function toggleActivePen(e) {
             gradientButton.classList.toggle('buttonActive');
             eraserButton.classList.toggle('buttonActive');
         }
-    } else if (clickedButton === "gradient") {
+    } else if (e.target.id === "gradient") {
         if (activePen === "gradient") {
             activePen = "black";
             gradientButton.classList.toggle('buttonActive');
@@ -135,11 +138,17 @@ function toggleActivePen(e) {
     }
 }
 
+
+function displayGridSize() {
+    currentValue = rangeSliderInput.value;
+    squaresPerSideDisplay.innerHTML = currentValue + " x " + currentValue;
+}
+
 function changeGridSize() {
     newValue = rangeSliderInput.value;
     gridContainer.innerHTML = '';
     createGrid(newValue);
-    sizeValueDiv.innerHTML = newValue + " x " + newValue;
+    squaresPerSideDisplay.innerHTML = newValue + " x " + newValue;
 }
 
 //Initial grid creation
