@@ -8,31 +8,36 @@
     -webkit-box-sizing: border-box;
 }
 
-html {
-    height: 100%;
-    color: #292929;
-}
-
 body {
-    background-color:rgb(221, 208, 200);
-    height: 100%;
+    background-color: #DDD0C8;
 }
 
 #container {
     display:flex;
-    height: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 h1 {
-    font-size: 3em;
+    font-size: 2.8em;
+    font-weight: 900;
+    margin: 40px 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: #666666;
 }
 
 #innercontainer {
     width: 900px;
-    margin: 50px auto;
+    margin: 0px auto;
+    padding-bottom: 2.5rem;
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -83,7 +88,6 @@ button {
     border-radius: 10px;
     cursor: pointer;
     margin-bottom: 20px;
-    color: #292929;
 }
 
 .buttonActive {
@@ -106,4 +110,18 @@ input[type=range] {
 
 #clearColors {
     margin-top: 30px;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    text-align: center;
+    line-height: 30px;
+}
+
+#footer img {
+    height: 20px;
+    vertical-align: middle;
 }
