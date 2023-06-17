@@ -1,4 +1,8 @@
 let activePen = 'black';
+let mouseIsClicked = false;
+
+document.addEventListener('mousedown', () => mouseIsClicked = true);
+document.addEventListener('mouseup', () => mouseIsClicked = false);
 
 const clearButton = document.getElementById('clearColors');
 const gridLinesButton = document.getElementById('toggleGridLines');
@@ -54,6 +58,7 @@ function toggleGridLines(input) {
 }
 
 function changeColor(e) {
+    if (mouseIsClicked === false) return;
     if (activePen === "rainBow") {
         const rValue = Math.floor(Math.random() * 256);
         const gValue = Math.floor(Math.random() * 256);
