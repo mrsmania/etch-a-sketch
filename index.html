@@ -4,24 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP: Etch-a-Sketch</title>
     <link rel="stylesheet" href="style.css">
-    <script src="main.js" defer></script>
-    <title>TOP etch-a-sketch</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+        <script src="main.js" defer></script>
 </head>
 
 <body>
     <div id="container">
+        <div id="header">
+            <h1>Etch-a-Sketch</h1>
+        </div>
         <div id="innercontainer">
             <div id="outerButtonContainer">
-                <button id="clearColors">Clear</button>
-                <button id="toggleGridLines">Grid lines</button>
-                <button id="rainbowColors">Rainbow pen</button>
-                <button id="gradient">Gradient pen</button>
-                <button id="eraser">Eraser</button>
+                <button id="toggleGridLines">Toggle Grid lines</button>
+                <button id="rainbowColors">Toggle Rainbow </button>
+                <button id="gradient">Toggle Gradient </button>
+                <button id="eraser">Toggle Eraser</button>
                 <div id="sliderContainer">
-                    <div id="squaresPerSide">16 x 16</div>
-                    <input type="range" id="slider" value="16" min="1" max="100">
+                    <div id="squaresPerSide">40 x 40</div>
+                    <input type="range" id="slider" value="40" min="1" max="100">
                 </div>
+                <button id="clearColors">Clear</button>
             </div>
             <div id="outerGridContainer">
                 <div id="gridContainer"></div>

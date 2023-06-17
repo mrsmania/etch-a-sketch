@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     border: 0;
+    font-family: "Poppins", monospace;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -9,6 +10,7 @@
 
 html {
     height: 100%;
+    color: #292929;
 }
 
 body {
@@ -19,8 +21,13 @@ body {
 #container {
     display:flex;
     height: 100%;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+h1 {
+    font-size: 3em;
 }
 
 #innercontainer {
@@ -76,14 +83,12 @@ button {
     border-radius: 10px;
     cursor: pointer;
     margin-bottom: 20px;
-}
-
-button:hover {
-    background-color: #e6b800;
+    color: #292929;
 }
 
 .buttonActive {
-    background-color: #e6b800;
+    background-color: #666666;
+    color: white;
 }
 
 #sliderContainer {
@@ -97,4 +102,8 @@ button:hover {
 
 input[type=range] {
     width: 100%;
+}
+
+#clearColors {
+    margin-top: 30px;
 }
