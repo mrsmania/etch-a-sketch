@@ -1,6 +1,4 @@
-let pen = 'black';
-let mouseIsClicked = false;
-
+const colorBtn = document.getElementById('colorPicker');
 const clearBtn = document.getElementById('clearColors');
 const gridBtn = document.getElementById('toggleGridLines');
 const rainbowBtn = document.getElementById('rainbowColors');
@@ -9,6 +7,10 @@ const eraserBtn = document.getElementById('eraser');
 const rangeSlider = document.getElementById('slider');
 const spsValue = document.getElementById('squaresPerSide');
 const gridContainerWidth = parseInt(getComputedStyle(gridContainer).width);
+
+let pen = 'color';
+console.log(pen);
+let mouseIsClicked = false;
 
 document.addEventListener('mousedown', () => mouseIsClicked = true);
 document.addEventListener('mouseup', () => mouseIsClicked = false);
@@ -19,6 +21,8 @@ darkenBtn.addEventListener('click', toggleActivePen);
 eraserBtn.addEventListener('click', toggleActivePen);
 rangeSlider.addEventListener('input', displayGridSize);
 rangeSlider.addEventListener('change', changeGridSize);
+
+
 
 function createGrid(squaresPerSide) {
     const gridSize = squaresPerSide * squaresPerSide;
@@ -74,8 +78,8 @@ function changeColor(e) {
         e.target.style.backgroundColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
         delete e.target.dataset.darkenedCounter;
         delete e.target.dataset.originColor;
-    } else if (pen === "black") {
-        e.target.style.backgroundColor = 'rgb(0, 0, 0)';
+    } else if (pen === "color") {
+        e.target.style.backgroundColor = colorBtn.value;
         delete e.target.dataset.darkenedCounter;
         delete e.target.dataset.originColor;
     } else if (pen === "eraser") {
@@ -111,9 +115,9 @@ function darkenBackground(e) {
 function toggleActivePen(e) {
     if (e.target.id === "rainbowColors") {
         if (pen === "rainBow") {
-            pen = "black";
+            pen = "color";
             rainbowBtn.classList.toggle('buttonActive');
-        } else if (pen === "black") {
+        } else if (pen === "color") {
             pen = "rainBow";
             rainbowBtn.classList.toggle('buttonActive');
         } else if (pen === "eraser") {
@@ -127,9 +131,9 @@ function toggleActivePen(e) {
         }
     } else if (e.target.id === "eraser") {
         if (pen === "eraser") {
-            pen = "black";
+            pen = "color";
             eraserBtn.classList.toggle('buttonActive');
-        } else if (pen === "black") {
+        } else if (pen === "color") {
             pen = "eraser";
             eraserBtn.classList.toggle('buttonActive');
         } else if (pen === "rainBow") {
@@ -143,9 +147,9 @@ function toggleActivePen(e) {
         }
     } else if (e.target.id === "gradient") {
         if (pen === "gradient") {
-            pen = "black";
+            pen = "color";
             darkenBtn.classList.toggle('buttonActive');
-        } else if (pen === "black") {
+        } else if (pen === "color") {
             pen = "gradient";
             darkenBtn.classList.toggle('buttonActive');
         } else if (pen === "rainBow") {

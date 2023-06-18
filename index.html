@@ -12,21 +12,23 @@
         <script src="main.js" defer></script>
 </head>
 
-<body>
+<body ondragstart="return false;" ondrop="return false;">
     <div id="container">
         <div id="header">
             <h1>Etch-a-Sketch</h1>
         </div>
         <div id="innercontainer">
             <div id="outerButtonContainer">
-                <button id="toggleGridLines">Toggle Grid lines</button>
-                <button id="rainbowColors">Toggle Rainbow </button>
-                <button id="gradient">Toggle Darkening </button>
-                <button id="eraser">Toggle Eraser</button>
+                <div><strong>Choose color:</strong></div>
+                <input type="color" id="colorPicker" value="#AD0000">
+                <button id="rainbowColors">Rainbow Mode</button>
+                <button id="gradient">Darkening Mode</button>
+                <button id="eraser">Eraser</button>
                 <div id="sliderContainer">
-                    <div id="squaresPerSide">40 x 40</div>
+                    Size: <div id="squaresPerSide">40 x 40</div>
                     <input type="range" id="slider" value="40" min="1" max="100">
                 </div>
+                <button id="toggleGridLines">Grid lines</button>
                 <button id="clearColors">Clear</button>
             </div>
             <div id="outerGridContainer">

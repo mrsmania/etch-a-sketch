@@ -49,6 +49,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     margin-right: 50px;
+    text-align: center;
 }
 
 #outerGridContainer {
@@ -95,9 +96,20 @@ button {
     color: white;
 }
 
+input[type=color] {
+    appearance: none;
+    -webkit-appearance: none;
+    background: none;
+    border:0;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 20px;
+    height: 50px;
+    border-radius: 10px;
+}
+
 #sliderContainer {
     width: 100%;
-    text-align: center;
 }
 
 #sizeValue {
@@ -108,7 +120,7 @@ input[type=range] {
     width: 100%;
 }
 
-#clearColors {
+#toggleGridLines {
     margin-top: 30px;
 }
 
