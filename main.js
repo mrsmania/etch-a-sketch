@@ -63,29 +63,26 @@ function toggleGridLines(input) {
 }
 
 function changeColor(e) {
-    if (e.type === "mouseover" && !mouseIsClicked) {
-        return;
-    } else {
-        if (activePen === "rainBow") {
-            const rValue = Math.floor(Math.random() * 256);
-            const gValue = Math.floor(Math.random() * 256);
-            const bValue = Math.floor(Math.random() * 256);
-            e.target.style.backgroundColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
-        } else if (activePen === "black") {
-            e.target.style.backgroundColor = 'black';
-        } else if (activePen === "eraser") {
-            e.target.style.backgroundColor = 'white';
-        } else if (activePen === "gradient") {
-            if (e.target.style.backgroundColor.match(/rgba/)) {
-                currentOpacity = Number(e.target.style.backgroundColor.slice(-4, -1));
-                if (currentOpacity <= 0.9) {
-                    e.target.style.backgroundColor = "rgba(0, 0, 0, " + Number(currentOpacity + 0.1) + ")";
-                }
-            } else if (e.target.style.backgroundColor === "rgb(0, 0, 0)") {
-                return;
-            } else {
-                e.target.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
+    if (e.type === "mouseover" && !mouseIsClicked) return;
+    if (activePen === "rainBow") {
+        const rValue = Math.floor(Math.random() * 256);
+        const gValue = Math.floor(Math.random() * 256);
+        const bValue = Math.floor(Math.random() * 256);
+        e.target.style.backgroundColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
+    } else if (activePen === "black") {
+        e.target.style.backgroundColor = 'black';
+    } else if (activePen === "eraser") {
+        e.target.style.backgroundColor = 'white';
+    } else if (activePen === "gradient") {
+        if (e.target.style.backgroundColor.match(/rgba/)) {
+            currentOpacity = Number(e.target.style.backgroundColor.slice(-4, -1));
+            if (currentOpacity <= 0.9) {
+                e.target.style.backgroundColor = "rgba(0, 0, 0, " + Number(currentOpacity + 0.1) + ")";
             }
+        } else if (e.target.style.backgroundColor === "rgb(0, 0, 0)") {
+            return;
+        } else {
+            e.target.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
         }
     }
 }
