@@ -1,35 +1,36 @@
-let activePen = 'black';
+let pen = 'black';
 let mouseIsClicked = false;
 
-const clearButton = document.getElementById('clearColors');
-const gridLinesButton = document.getElementById('toggleGridLines');
-const rainbowButton = document.getElementById('rainbowColors');
-const gradientButton = document.getElementById('gradient');
-const eraserButton = document.getElementById('eraser');
-const rangeSliderInput = document.getElementById('slider');
-const squaresPerSideDisplay = document.getElementById('squaresPerSide');
+const clearBtn = document.getElementById('clearColors');
+const gridBtn = document.getElementById('toggleGridLines');
+const rainbowBtn = document.getElementById('rainbowColors');
+const darkenBtn = document.getElementById('gradient');
+const eraserBtn = document.getElementById('eraser');
+const rangeSlider = document.getElementById('slider');
+const spsValue = document.getElementById('squaresPerSide');
 const gridContainerWidth = parseInt(getComputedStyle(gridContainer).width);
 
 document.addEventListener('mousedown', () => mouseIsClicked = true);
 document.addEventListener('mouseup', () => mouseIsClicked = false);
-clearButton.addEventListener('click', clearGrid);
-gridLinesButton.addEventListener('click', toggleGridLines);
-rainbowButton.addEventListener('click', toggleActivePen);
-gradientButton.addEventListener('click', toggleActivePen);
-eraserButton.addEventListener('click', toggleActivePen);
-rangeSliderInput.addEventListener('input', displayGridSize);
-rangeSliderInput.addEventListener('change', changeGridSize);
+clearBtn.addEventListener('click', clearGrid);
+gridBtn.addEventListener('click', toggleGridLines);
+rainbowBtn.addEventListener('click', toggleActivePen);
+darkenBtn.addEventListener('click', toggleActivePen);
+eraserBtn.addEventListener('click', toggleActivePen);
+rangeSlider.addEventListener('input', displayGridSize);
+rangeSlider.addEventListener('change', changeGridSize);
 
 function createGrid(squaresPerSide) {
     const gridSize = squaresPerSide * squaresPerSide;
     const gridElementWidth = ((gridContainerWidth / squaresPerSide)) + "px";
     for (let i = 0; i < gridSize; i++) {
         const div = document.createElement('div');
-        div.className = "gridElement";
         div.addEventListener('mouseover', changeColor);
         div.addEventListener('mousedown', changeColor);
+        div.className = "gridElement";
         div.style.width = gridElementWidth;
         div.style.height = gridElementWidth;
+        div.style.backgroundColor = "#fff";
         gridContainer.append(div);
     }
     toggleGridLines(squaresPerSide);
@@ -42,7 +43,9 @@ function selectAllGridElements() {
 function clearGrid() {
     selectAllGridElements();
     gridElements.forEach(gridElement => {
-        gridElement.style.backgroundColor = "white";
+        gridElement.style.backgroundColor = "rgb(255, 255, 255)";
+        delete gridElement.dataset.darkenedCounter;
+        delete gridElement.dataset.originColor;
     });
 }
 
@@ -59,99 +62,120 @@ function toggleGridLines(input) {
             gridElementsArr[i].classList.toggle('gridBorderBottom');
         }
     };
-    gridLinesButton.classList.toggle('buttonActive');
+    gridBtn.classList.toggle('buttonActive');
 }
 
 function changeColor(e) {
-    if (e.type === "mouseover" && !mouseIsClicked) {
+    if (e.type === 'mouseover' && mouseIsClicked === false) {
+        console.log(e.type);
+        console.log(mouseIsClicked);
         return;
-    } else {
-        if (activePen === "rainBow") {
-            const rValue = Math.floor(Math.random() * 256);
-            const gValue = Math.floor(Math.random() * 256);
-            const bValue = Math.floor(Math.random() * 256);
-            e.target.style.backgroundColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
-        } else if (activePen === "black") {
-            e.target.style.backgroundColor = 'black';
-        } else if (activePen === "eraser") {
-            e.target.style.backgroundColor = 'white';
-        } else if (activePen === "gradient") {
-            if (e.target.style.backgroundColor.match(/rgba/)) {
-                currentOpacity = Number(e.target.style.backgroundColor.slice(-4, -1));
-                if (currentOpacity <= 0.9) {
-                    e.target.style.backgroundColor = "rgba(0, 0, 0, " + Number(currentOpacity + 0.1) + ")";
-                }
-            } else if (e.target.style.backgroundColor === "rgb(0, 0, 0)") {
-                return;
-            } else {
-                e.target.style.backgroundColor = "rgba(0, 0, 0, 0.1)";
-            }
+    }
+
+    if (pen === "rainBow") {
+        const rValue = Math.floor(Math.random() * 256);
+        const gValue = Math.floor(Math.random() * 256);
+        const bValue = Math.floor(Math.random() * 256);
+        e.target.style.backgroundColor = "rgb(" + rValue + ", " + gValue + ", " + bValue + ")";
+        delete e.target.dataset.darkenedCounter;
+        delete e.target.dataset.originColor;
+    } else if (pen === "black") {
+        e.target.style.backgroundColor = 'rgb(0, 0, 0)';
+        delete e.target.dataset.darkenedCounter;
+        delete e.target.dataset.originColor;
+    } else if (pen === "eraser") {
+        e.target.style.backgroundColor = 'rgb(255, 255, 255)';
+        delete e.target.dataset.darkenedCounter;
+        delete e.target.dataset.originColor;
+    } else if (pen === "gradient") {
+        let rgb = e.target.style.backgroundColor.substring(4, e.target.style.backgroundColor.length - 1).replace(/ /g, '').split(',');
+        if (e.target.dataset.originColor === undefined) {
+            e.target.dataset.originColor = "rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ")";
+            e.target.dataset.darkenedCounter = "0";
+            darkenBackground(e);
+        } else {
+            darkenBackground(e);
         }
+    }
+}
+
+function darkenBackground(e) {
+    currentCounter = Number(e.target.dataset.darkenedCounter);
+    let rgbOrigin = e.target.dataset.originColor.substring(4, e.target.dataset.originColor.length - 1).replace(/ /g, '').split(',');
+    if (currentCounter < 10) {
+        newR = Math.round(Number(rgbOrigin[0]) - (Number(rgbOrigin[0]) * (currentCounter + 1) / 10));
+        newG = Math.round(Number(rgbOrigin[1]) - (Number(rgbOrigin[1]) * (currentCounter + 1) / 10));
+        newB = Math.round(Number(rgbOrigin[2]) - (Number(rgbOrigin[2]) * (currentCounter + 1) / 10));
+        newColor = "rgb(" + newR + "," + newG + "," + newB + ")";
+        currentCounter++;
+        e.target.style.backgroundColor = newColor;
+        e.target.dataset.darkenedCounter = currentCounter;
     }
 }
 
 function toggleActivePen(e) {
     if (e.target.id === "rainbowColors") {
-        if (activePen === "rainBow") {
-            activePen = "black";
-            rainbowButton.classList.toggle('buttonActive');
-        } else if (activePen === "black") {
-            activePen = "rainBow";
-            rainbowButton.classList.toggle('buttonActive');
-        } else if (activePen === "eraser") {
-            activePen = "rainBow";
-            rainbowButton.classList.toggle('buttonActive');
-            eraserButton.classList.toggle('buttonActive');
-        } else if (activePen === "gradient") {
-            activePen = "rainBow";
-            rainbowButton.classList.toggle('buttonActive');
-            gradientButton.classList.toggle('buttonActive');
+        if (pen === "rainBow") {
+            pen = "black";
+            rainbowBtn.classList.toggle('buttonActive');
+        } else if (pen === "black") {
+            pen = "rainBow";
+            rainbowBtn.classList.toggle('buttonActive');
+        } else if (pen === "eraser") {
+            pen = "rainBow";
+            rainbowBtn.classList.toggle('buttonActive');
+            eraserBtn.classList.toggle('buttonActive');
+        } else if (pen === "gradient") {
+            pen = "rainBow";
+            rainbowBtn.classList.toggle('buttonActive');
+            darkenBtn.classList.toggle('buttonActive');
         }
     } else if (e.target.id === "eraser") {
-        if (activePen === "eraser") {
-            activePen = "black";
-            eraserButton.classList.toggle('buttonActive');
-        } else if (activePen === "black") {
-            activePen = "eraser";
-            eraserButton.classList.toggle('buttonActive');
-        } else if (activePen === "rainBow") {
-            activePen = "eraser";
-            rainbowButton.classList.toggle('buttonActive');
-            eraserButton.classList.toggle('buttonActive');
-        } else if (activePen === "gradient") {
-            activePen = "eraser";
-            gradientButton.classList.toggle('buttonActive');
-            eraserButton.classList.toggle('buttonActive');
+        if (pen === "eraser") {
+            pen = "black";
+            eraserBtn.classList.toggle('buttonActive');
+        } else if (pen === "black") {
+            pen = "eraser";
+            eraserBtn.classList.toggle('buttonActive');
+        } else if (pen === "rainBow") {
+            pen = "eraser";
+            rainbowBtn.classList.toggle('buttonActive');
+            eraserBtn.classList.toggle('buttonActive');
+        } else if (pen === "gradient") {
+            pen = "eraser";
+            darkenBtn.classList.toggle('buttonActive');
+            eraserBtn.classList.toggle('buttonActive');
         }
     } else if (e.target.id === "gradient") {
-        if (activePen === "gradient") {
-            activePen = "black";
-            gradientButton.classList.toggle('buttonActive');
-        } else if (activePen === "black") {
-            activePen = "gradient";
-            gradientButton.classList.toggle('buttonActive');
-        } else if (activePen === "rainBow") {
-            activePen = "gradient";
-            rainbowButton.classList.toggle('buttonActive');
-            gradientButton.classList.toggle('buttonActive');
-        } else if (activePen === "eraser") {
-            activePen = "gradient";
-            eraserButton.classList.toggle('buttonActive');
-            gradientButton.classList.toggle('buttonActive');
+        if (pen === "gradient") {
+            pen = "black";
+            darkenBtn.classList.toggle('buttonActive');
+        } else if (pen === "black") {
+            pen = "gradient";
+            darkenBtn.classList.toggle('buttonActive');
+        } else if (pen === "rainBow") {
+            pen = "gradient";
+            rainbowBtn.classList.toggle('buttonActive');
+            darkenBtn.classList.toggle('buttonActive');
+        } else if (pen === "eraser") {
+            pen = "gradient";
+            eraserBtn.classList.toggle('buttonActive');
+            darkenBtn.classList.toggle('buttonActive');
         }
     }
 }
 
 function displayGridSize() {
-    currentValue = rangeSliderInput.value;
-    squaresPerSideDisplay.innerHTML = currentValue + " x " + currentValue;
+    currentValue = rangeSlider.value;
+    spsValue.innerHTML = currentValue + " x " + currentValue;
 }
 
 function changeGridSize() {
-    newValue = rangeSliderInput.value;
+    newValue = rangeSlider.value;
     gridContainer.innerHTML = '';
     createGrid(newValue);
-    squaresPerSideDisplay.innerHTML = newValue + " x " + newValue;
+    spsValue.innerHTML = newValue + " x " + newValue;
+    gridBtn.classList.toggle('buttonActive');
 }
 
 //Initial grid creation
