@@ -166,14 +166,14 @@ function toggleActivePen(e) {
 
 function displayGridSize() {
     currentValue = rangeSlider.value;
-    spsValue.innerHTML = currentValue + " x " + currentValue;
+    spsValue.innerHTML = "Size: "+currentValue + " x " + currentValue;
 }
 
 function changeGridSize() {
     newValue = rangeSlider.value;
     gridContainer.innerHTML = '';
     createGrid(newValue);
-    spsValue.innerHTML = newValue + " x " + newValue;
+    spsValue.innerHTML = "Size: "+newValue + " x " + newValue;
     gridBtn.classList.toggle('buttonActive');
 }
 
