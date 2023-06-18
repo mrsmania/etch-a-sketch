@@ -66,12 +66,7 @@ function toggleGridLines(input) {
 }
 
 function changeColor(e) {
-    if (e.type === 'mouseover' && mouseIsClicked === false) {
-        console.log(e.type);
-        console.log(mouseIsClicked);
-        return;
-    }
-
+    if (e.type === 'mouseover' && mouseIsClicked === false) return;
     if (pen === "rainBow") {
         const rValue = Math.floor(Math.random() * 256);
         const gValue = Math.floor(Math.random() * 256);
