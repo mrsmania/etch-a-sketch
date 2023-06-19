@@ -18,10 +18,8 @@ gridBtn.addEventListener('click', toggleGridLines);
 rainbowBtn.addEventListener('click', toggleActivePen);
 darkenBtn.addEventListener('click', toggleActivePen);
 eraserBtn.addEventListener('click', toggleActivePen);
-rangeSlider.addEventListener('input', displayGridSize);
-rangeSlider.addEventListener('change', changeGridSize);
-
-
+rangeSlider.addEventListener('input', (e) => displayGridSize(e.target.value));
+rangeSlider.addEventListener('change', (e) => changeGridSize(e.target.value));
 
 function createGrid(squaresPerSide) {
     const gridSize = squaresPerSide * squaresPerSide;
@@ -163,16 +161,14 @@ function toggleActivePen(e) {
     }
 }
 
-function displayGridSize() {
-    currentValue = rangeSlider.value;
-    spsValue.innerHTML = "Size: "+currentValue + " x " + currentValue;
+function displayGridSize(value) {
+    return spsValue.innerHTML = "Size: " + value + " x " + value;
 }
 
-function changeGridSize() {
-    newValue = rangeSlider.value;
+function changeGridSize(value) {
+    displayGridSize(value);
+    createGrid(value);
     gridContainer.innerHTML = '';
-    createGrid(newValue);
-    spsValue.innerHTML = "Size: "+newValue + " x " + newValue;
     gridBtn.classList.toggle('buttonActive');
 }
 
