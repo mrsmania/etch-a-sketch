@@ -9,7 +9,6 @@ const spsValue = document.getElementById('squaresPerSide');
 const gridContainerWidth = parseInt(getComputedStyle(gridContainer).width);
 
 let pen = 'color';
-console.log(pen);
 let mouseIsClicked = false;
 
 document.addEventListener('mousedown', () => mouseIsClicked = true);
