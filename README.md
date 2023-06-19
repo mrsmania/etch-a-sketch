@@ -4,6 +4,8 @@ Created as part of The Odin Project curriculum.
 
 ⭐ [Live Demo](https://mrsmania.github.io/etch-a-sketch/) 
 
+![App Preview](https://github.com/mrsmania/etch-a-sketch/blob/b5da457eac6404cc995bc396c50989a633a214d3/img/mario.png)
+
 Note: The app is only usable on non-mobile devices as a mouse is required for the hovering functionality.
 
 ### Features
