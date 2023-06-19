@@ -167,8 +167,8 @@ function displayGridSize(value) {
 
 function changeGridSize(value) {
     displayGridSize(value);
-    createGrid(value);
     gridContainer.innerHTML = '';
+    createGrid(value);
     gridBtn.classList.toggle('buttonActive');
 }
 
