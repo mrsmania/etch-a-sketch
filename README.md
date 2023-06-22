@@ -26,4 +26,4 @@ Note: The app is only usable on non-mobile devices as a mouse is required for th
 * Better knowledge & understanding of general JavaScript.
 * Learned about event handlers, functions and DOM manipulations.
 * Improved clean code writing.
-* Deepened knowledge of flex layout creation
+* Deepened knowledge of flex layout creation.
